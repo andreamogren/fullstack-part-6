@@ -1,32 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
-
-/* const counterReducer = (state = 0, action) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1
-        case 'DECREMENT':
-            return state - 1
-        case 'ZERO':
-            return 0
-        default:
-            return state
-    }
-}
-
-const store = createStore(counterReducer) */
-
-const noteReducer = (state = [], action) => {
-    if (action.type === 'NEW_NOTE') {
-        state.concat(action.data)
-        return state
-    }
-
-    return state
-}
+import noteReducer from './reducers/noteReducer'
 
 const store = createStore(noteReducer)
+//const store = createStore(counterReducer)
 
 store.dispatch({ 
     type: 'NEW_NOTE', 
