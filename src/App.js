@@ -6,6 +6,8 @@ import noteReducer from './reducers/noteReducer'
 const store = createStore(noteReducer)
 //const store = createStore(counterReducer)
 
+const generateId = () => Number((Math.random() * 1000000).toFixed(0))
+
 store.dispatch({ 
     type: 'NEW_NOTE', 
     data: {
@@ -26,6 +28,26 @@ store.dispatch({
 
 
 const App = () => {
+    const addNote = (event) => {
+        event.preventDefault()
+        const content = event.target.note.value
+        store.dispatch({
+            type: 'NEW_NOTE',
+            data: {
+                content,
+                important: false,
+                id: generateId()
+            }
+        })
+        event.target.note.value = ''
+    }
+
+    const toggleImportance = (id) => {
+        store.dispatch({
+            type: 'TOGGLE_IMPORTANCE',
+            data: { id }
+        })
+    }
     return (
 /*         <div>
             <div>
@@ -36,6 +58,10 @@ const App = () => {
             <button onClick={e => store.dispatch({ type: 'ZERO' })}>Zero</button>
         </div> */
         <div>
+            <form onSubmit={addNote}>
+                <input name="note"/>
+                <button type="submit">Add   </button>
+            </form>
             <ul>
                 {store.getState().map(note => 
                     <li key={note.id}>
